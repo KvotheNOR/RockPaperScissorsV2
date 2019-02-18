@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+
+	<body>
+		<h1>ROCK PAPER SCISSORS</h1>
+		<div class="btn-list">
+			<button id="rock">Rock</button>
+			<button id="paper">Paper</button>
+			<button id="scissors">Scissors</button>
+		</div>
+		<div class="result">
+			<h3 id="compVsPlay"></h3>
+			<h3 id="print-score">Make your choice above</h3>
+			<h4 id="computer"></h4>
+			<h4 id="player"></h4>
+			
+		</div>
+		<div id="output">
+			<h4 id="winnerIs"></h4>
+		</div>
+
+
+
+
+		
+		<script>
+			document.getElementById("rock").addEventListener("click",
+				function() {
+					playRound("Rock", computerPlay());
+				});
+			document.getElementById("paper").addEventListener("click",
+				function() {
+					playRound("Paper", computerPlay());
+				});
+			document.getElementById("scissors").addEventListener("click",function() {
+					playRound("Scissors", computerPlay());
+				});
+
+			var computerScore = 0;
+			var playerScore = 0;
+
+
+			function computerPlay() {
+				let computerChoice = Math.random() * (4 - 1) + 1;
+				computerChoice = Math.floor(computerChoice);
+				return (computerChoice == 1) ? "Rock"
+				:	(computerChoice == 2) ? "Paper"
+				:	"Scissors";
+			}
+
+	
+			function computerWins(computerSelection, playerSelection) {
+				computerScore += 1;
+				document.getElementById("print-score").innerHTML = ("Computer wins! " + computerSelection + " beats " + playerSelection)
+				document.getElementById("computer").innerHTML = (`computer: ${computerScore}`)
+				if (computerScore == 5 && playerScore < 5) {
+					document.getElementById("winnerIs").innerHTML = ("Computer is the first to 5!")
+				}
+			}
+
+			function playerWins(computerSelection, playerSelection) {
+				playerScore += 1;
+				document.getElementById("print-score").innerHTML = ("Player wins! " + playerSelection + " beats " + computerSelection);
+				document.getElementById("player").innerHTML = (`Player: ${playerScore}`)
+				if (playerScore == 5 && computerScore < 5) {
+					document.getElementById("winnerIs").innerHTML = ("Player is the first to 5!")
+				}
+			}
+
+
+
+			function playRound(computerSelection, playerSelection) {
+				console.log(computerSelection, playerSelection)
+				document.getElementById("compVsPlay").innerHTML = (`player: ${playerSelection} vs computer: ${computerSelection}`)
+				if (computerSelection == playerSelection) {
+					document.getElementById("print-score").innerHTML = ("It's a draw, both of you picked " + computerSelection)
+				} else if (computerSelection == "Rock") {
+					switch (playerSelection) {
+						case "Paper":
+							return playerWins(computerSelection, playerSelection)
+						case "Scissors":
+							return computerWins(computerSelection, playerSelection);
+						default:
+							return "OOOPS ERROR";
+					}
+				} else if (computerSelection == "Paper") {
+					switch (playerSelection) {
+						case "Rock":
+							return computerWins(computerSelection, playerSelection);
+						case "Scissors":
+							return playerWins(computerSelection, playerSelection);
+					}
+				} else {
+					switch (playerSelection) {
+						case "Rock":
+							return playerWins(computerSelection, playerSelection);
+						case "Paper":
+							return computerWins(computerSelection, playerSelection);
+					}
+				}
+			}
+
+			function game() {
+
+			}
+		</script>
+	</body>
+
+</html>
